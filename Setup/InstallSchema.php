@@ -22,6 +22,7 @@
 namespace Mageplaza\BannerSlider\Setup;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\State;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Filesystem;
@@ -30,6 +31,7 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Mageplaza\BannerSlider\Model\Config\Source\Template;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Area;
 
 /**
  * Class InstallSchema
@@ -60,11 +62,13 @@ class InstallSchema implements InstallSchemaInterface
      * @param LoggerInterface $logger
      */
     public function __construct(
+        State $state,
         Template $template,
         Filesystem $filesystem,
         LoggerInterface $logger
     )
     {
+        $state->setAreaCode(Area::AREA_FRONTEND);
         $this->logger     = $logger;
         $this->template   = $template;
         $this->fileSystem = $filesystem;
